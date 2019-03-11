@@ -3,6 +3,7 @@ package ch.uzh.ifi.seal.soprafs19.entity;
 import ch.uzh.ifi.seal.soprafs19.constant.UserStatus;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,8 @@ public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	//VARIABLES
+
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -24,12 +27,34 @@ public class User implements Serializable {
 	
 	@Column(nullable = false, unique = true) 
 	private String username;
+
+	@Column(nullable = false)
+	private String password;
+
+	@Column(nullable = false)
+	private Date creationDate;
+
+	@Column
+	private Date birthday;
 	
 	@Column(nullable = false, unique = true) 
 	private String token;
 
 	@Column(nullable = false)
 	private UserStatus status;
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) return true;
+		if (!(o instanceof User)) {
+			return false;
+		}
+		User user = (User) o;
+		return this.getId().equals(user.getId());
+	}
+
+	//GETTERS AND SETTERS
 
 	public Long getId() {
 		return id;
@@ -71,13 +96,27 @@ public class User implements Serializable {
 		this.status = status;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (o == this) return true;
-		if (!(o instanceof User)) {
-			return false;
-		}
-		User user = (User) o;
-		return this.getId().equals(user.getId());
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
 	}
 }
