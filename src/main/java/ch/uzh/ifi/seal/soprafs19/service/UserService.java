@@ -51,6 +51,7 @@ public class UserService {
     public void editUser(long id, User user) {
 
         User oldUser = getUserById(id);
+
         // Check if different fields are set, so we don't ned to send all fields when updating a user.
 
         if (user.getUsername() != null){
@@ -60,6 +61,15 @@ public class UserService {
         if (user.getBirthday() != null){
             oldUser.setBirthday(user.getBirthday());
         }
-        userRepository.save(oldUser);
+
+        this.userRepository.save(oldUser);
+    }
+
+    public boolean canEdit(long id, String token){
+        String myToken = getUserById(id).getToken();
+        if (myToken.equals(token))
+            return true;
+        return false;
+
     }
 }
